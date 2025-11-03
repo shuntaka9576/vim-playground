@@ -2,7 +2,7 @@
 
 IMAGE_NAME := vim-playground
 NVIM_CONFIG := $(shell pwd)/nvim
-WORKSPACE := $(shell pwd)
+WORKSPACE := $(shell pwd)/work
 
 build:
 	docker build -t $(IMAGE_NAME) .

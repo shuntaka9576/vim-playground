@@ -1,6 +1,41 @@
 -- vim-playground neovim設定ファイル
 -- このファイルはホストで編集し、コンテナにマウントして使用します
 
+-- lazy.nvim のブートストラップ
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+  vim.fn.system({
+    "git",
+    "clone",
+    "--filter=blob:none",
+    "https://github.com/folke/lazy.nvim.git",
+    "--branch=stable",
+    lazypath,
+  })
+end
+vim.opt.rtp:prepend(lazypath)
+
+-- プラグイン設定
+require("lazy").setup({
+  -- mini.nvim 基本セット
+  {
+    "echasnovski/mini.nvim",
+    version = false,
+    config = function()
+      -- mini.pairs: 括弧の自動ペア入力
+      require("mini.pairs").setup()
+
+      -- mini.surround: テキストの囲み操作
+      -- 使い方: sa{motion}{char} で囲む, sd{char} で削除, sr{old}{new} で置換
+      require("mini.surround").setup()
+
+      -- mini.comment: コメントアウト
+      -- 使い方: gcc で行コメント, gc{motion} でモーション範囲をコメント
+      require("mini.comment").setup()
+    end,
+  },
+})
+
 -- 基本設定
 vim.opt.number = true              -- 行番号を表示
 vim.opt.relativenumber = true      -- 相対行番号を表示
